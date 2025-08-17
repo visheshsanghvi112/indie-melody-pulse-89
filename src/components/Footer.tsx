@@ -37,22 +37,27 @@ export function Footer() {
             </div>
           </div>
 
-          {/* Credits */}
+          {/* Creator */}
           <div className="space-y-4">
             <h3 className="font-semibold text-foreground">Created By</h3>
-            <div className="space-y-2">
+            <div className="space-y-3">
               <a 
                 href="http://visheshsanghvi.me/" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="flex items-center space-x-2 text-sm text-muted-foreground hover:text-primary transition-colors group"
               >
-                <span>Vishesh Sanghvi</span>
+                <span className="font-medium">Vishesh Sanghvi</span>
                 <ExternalLink className="h-3 w-3 group-hover:translate-x-1 transition-transform" />
               </a>
-              <p className="text-xs text-muted-foreground">
-                Full Stack Developer & Music Enthusiast
-              </p>
+              <div className="space-y-1">
+                <p className="text-xs text-muted-foreground">
+                  Full Stack Developer & Music Enthusiast
+                </p>
+                <p className="text-xs text-muted-foreground/80">
+                  Passionate about building innovative music technology solutions
+                </p>
+              </div>
             </div>
           </div>
         </div>
@@ -65,7 +70,7 @@ export function Footer() {
             <span>for music lovers everywhere</span>
           </div>
           <div className="text-sm text-muted-foreground">
-            © 2024 India Music Insights. All rights reserved.
+            © 2024 Music Insights by Vishesh Sanghvi. All rights reserved.
           </div>
         </div>
       </div>

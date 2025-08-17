@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Eye, EyeOff, Music, User, Mail, Lock, CheckCircle2 } from 'lucide-react';
+import { Eye, EyeOff, Music, User, Mail, Lock, CheckCircle2, ArrowLeft } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -24,6 +24,15 @@ export default function Register() {
   const [agreeToTerms, setAgreeToTerms] = useState(false);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+
+  // SEO and accessibility
+  useEffect(() => {
+    document.title = 'Sign Up - Music Insights Dashboard';
+    document.querySelector('meta[name="description"]')?.setAttribute(
+      'content', 
+      'Create your free Music Insights account to access professional music analytics, streaming data, and market insights. Join thousands of music professionals.'
+    );
+  }, []);
 
   const roles = [
     'Music Industry Professional',
@@ -121,137 +130,155 @@ export default function Register() {
   const passwordStrength = getPasswordStrength();
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-hero p-4">
-      <div className="w-full max-w-2xl space-y-8 animate-fade-in">
-        {/* Header */}
-        <div className="text-center space-y-4">
-          <div className="flex items-center justify-center space-x-3">
-            <div className="h-12 w-12 rounded-xl bg-gradient-primary flex items-center justify-center glow-effect">
-              <Music className="h-6 w-6 text-primary-foreground animate-music-note" />
-            </div>
-            <h1 className="text-3xl font-bold text-foreground">Music Insights</h1>
-          </div>
-          <div className="space-y-2">
-            <h2 className="text-2xl font-semibold text-foreground">Create your account</h2>
-            <p className="text-muted-foreground">
-              Join thousands of music professionals using our analytics platform
-            </p>
-          </div>
+    <div className="min-h-screen bg-gradient-hero">
+      {/* Mobile-optimized header */}
+      <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+        <div className="container flex h-16 items-center px-4">
+          <Link to="/" className="flex items-center space-x-2 hover:opacity-80 transition-opacity">
+            <ArrowLeft className="h-4 w-4 text-muted-foreground" />
+            <span className="text-sm text-muted-foreground">Back to Home</span>
+          </Link>
         </div>
+      </header>
 
-        {/* Registration Form */}
-        <Card className="shadow-elegant">
-          <CardHeader className="space-y-1">
-            <CardTitle className="flex items-center space-x-2">
-              <User className="h-5 w-5" />
-              <span>Sign Up</span>
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <form onSubmit={handleRegister} className="space-y-6">
-              {/* Name Fields */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="firstName" className="text-sm font-medium text-foreground">
-                    First Name *
-                  </Label>
-                  <div className="relative">
-                    <User className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+      <main className="flex items-center justify-center px-4 py-6 sm:py-8">
+        <div className="w-full max-w-2xl space-y-6 sm:space-y-8">
+          {/* Brand Header */}
+          <div className="text-center space-y-4">
+            <div className="flex items-center justify-center space-x-3">
+              <div className="h-10 w-10 sm:h-12 sm:w-12 rounded-xl bg-gradient-primary flex items-center justify-center glow-effect">
+                <Music className="h-5 w-5 sm:h-6 sm:w-6 text-primary-foreground" />
+              </div>
+              <h1 className="text-2xl sm:text-3xl font-bold text-foreground">Music Insights</h1>
+            </div>
+            <div className="space-y-2">
+              <h2 className="text-xl sm:text-2xl font-semibold text-foreground">Create your account</h2>
+              <p className="text-sm sm:text-base text-muted-foreground px-2">
+                Join thousands of music professionals using our analytics platform
+              </p>
+            </div>
+          </div>
+
+          {/* Registration Form */}
+          <Card className="shadow-elegant border-border/50 bg-card/50 backdrop-blur-sm">
+            <CardHeader className="space-y-1 pb-4">
+              <CardTitle className="flex items-center space-x-2 text-lg">
+                <User className="h-4 w-4 sm:h-5 sm:w-5" />
+                <span>Sign Up</span>
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="px-4 sm:px-6">
+              <form onSubmit={handleRegister} className="space-y-5 sm:space-y-6">
+                {/* Name Fields */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="firstName" className="text-sm font-medium text-foreground">
+                      First Name *
+                    </Label>
+                    <div className="relative">
+                      <User className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                      <Input
+                        id="firstName"
+                        type="text"
+                        placeholder="John"
+                        value={formData.firstName}
+                        onChange={(e) => handleInputChange('firstName', e.target.value)}
+                        className="pl-10 h-11 sm:h-12 text-base"
+                        autoComplete="given-name"
+                        required
+                      />
+                    </div>
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="lastName" className="text-sm font-medium text-foreground">
+                      Last Name *
+                    </Label>
                     <Input
-                      id="firstName"
+                      id="lastName"
                       type="text"
-                      placeholder="John"
-                      value={formData.firstName}
-                      onChange={(e) => handleInputChange('firstName', e.target.value)}
-                      className="pl-10"
+                      placeholder="Doe"
+                      value={formData.lastName}
+                      onChange={(e) => handleInputChange('lastName', e.target.value)}
+                      className="h-11 sm:h-12 text-base"
+                      autoComplete="family-name"
                       required
                     />
                   </div>
                 </div>
 
+                {/* Email Field */}
                 <div className="space-y-2">
-                  <Label htmlFor="lastName" className="text-sm font-medium text-foreground">
-                    Last Name *
+                  <Label htmlFor="email" className="text-sm font-medium text-foreground">
+                    Email Address *
                   </Label>
-                  <Input
-                    id="lastName"
-                    type="text"
-                    placeholder="Doe"
-                    value={formData.lastName}
-                    onChange={(e) => handleInputChange('lastName', e.target.value)}
-                    required
-                  />
-                </div>
-              </div>
-
-              {/* Email Field */}
-              <div className="space-y-2">
-                <Label htmlFor="email" className="text-sm font-medium text-foreground">
-                  Email Address *
-                </Label>
-                <div className="relative">
-                  <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                  <Input
-                    id="email"
-                    type="email"
-                    placeholder="john.doe@example.com"
-                    value={formData.email}
-                    onChange={(e) => handleInputChange('email', e.target.value)}
-                    className="pl-10"
-                    required
-                  />
-                </div>
-              </div>
-
-              {/* Company and Role */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="company" className="text-sm font-medium text-foreground">
-                    Company
-                  </Label>
-                  <Input
-                    id="company"
-                    type="text"
-                    placeholder="Your company name"
-                    value={formData.company}
-                    onChange={(e) => handleInputChange('company', e.target.value)}
-                  />
+                  <div className="relative">
+                    <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                    <Input
+                      id="email"
+                      type="email"
+                      placeholder="john.doe@example.com"
+                      value={formData.email}
+                      onChange={(e) => handleInputChange('email', e.target.value)}
+                      className="pl-10 h-11 sm:h-12 text-base"
+                      autoComplete="email"
+                      required
+                    />
+                  </div>
                 </div>
 
-                <div className="space-y-2">
-                  <Label htmlFor="role" className="text-sm font-medium text-foreground">
-                    Role
-                  </Label>
-                  <Select onValueChange={(value) => handleInputChange('role', value)}>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select your role" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {roles.map(role => (
-                        <SelectItem key={role} value={role}>{role}</SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-              </div>
+                {/* Company and Role */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="company" className="text-sm font-medium text-foreground">
+                      Company
+                    </Label>
+                    <Input
+                      id="company"
+                      type="text"
+                      placeholder="Your company name"
+                      value={formData.company}
+                      onChange={(e) => handleInputChange('company', e.target.value)}
+                      className="h-11 sm:h-12 text-base"
+                      autoComplete="organization"
+                    />
+                  </div>
 
-              {/* Password Fields */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="role" className="text-sm font-medium text-foreground">
+                      Role
+                    </Label>
+                    <Select onValueChange={(value) => handleInputChange('role', value)}>
+                      <SelectTrigger className="h-11 sm:h-12 text-base">
+                        <SelectValue placeholder="Select your role" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {roles.map(role => (
+                          <SelectItem key={role} value={role}>{role}</SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
+
+                {/* Password Fields */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <Label htmlFor="password" className="text-sm font-medium text-foreground">
                     Password *
                   </Label>
                   <div className="relative">
                     <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                    <Input
-                      id="password"
-                      type={showPassword ? 'text' : 'password'}
-                      placeholder="Create a strong password"
-                      value={formData.password}
-                      onChange={(e) => handleInputChange('password', e.target.value)}
-                      className="pl-10 pr-10"
-                      required
-                    />
+                      <Input
+                        id="password"
+                        type={showPassword ? 'text' : 'password'}
+                        placeholder="Create a strong password"
+                        value={formData.password}
+                        onChange={(e) => handleInputChange('password', e.target.value)}
+                        className="pl-10 pr-12 h-11 sm:h-12 text-base"
+                        autoComplete="new-password"
+                        required
+                      />
                     <Button
                       type="button"
                       variant="ghost"
@@ -292,15 +319,16 @@ export default function Register() {
                   </Label>
                   <div className="relative">
                     <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                    <Input
-                      id="confirmPassword"
-                      type={showConfirmPassword ? 'text' : 'password'}
-                      placeholder="Confirm your password"
-                      value={formData.confirmPassword}
-                      onChange={(e) => handleInputChange('confirmPassword', e.target.value)}
-                      className="pl-10 pr-10"
-                      required
-                    />
+                      <Input
+                        id="confirmPassword"
+                        type={showConfirmPassword ? 'text' : 'password'}
+                        placeholder="Confirm your password"
+                        value={formData.confirmPassword}
+                        onChange={(e) => handleInputChange('confirmPassword', e.target.value)}
+                        className="pl-10 pr-12 h-11 sm:h-12 text-base"
+                        autoComplete="new-password"
+                        required
+                      />
                     <Button
                       type="button"
                       variant="ghost"
@@ -358,87 +386,103 @@ export default function Register() {
                 </Label>
               </div>
 
-              {/* Register Button */}
-              <Button
-                type="submit"
-                className="w-full bg-gradient-primary hover:opacity-90 transition-all duration-300"
-                disabled={loading}
+                {/* Register Button */}
+                <Button
+                  type="submit"
+                  className="w-full bg-gradient-primary hover:opacity-90 transition-all duration-300 h-11 sm:h-12 text-base font-medium"
+                  disabled={loading}
+                >
+                  {loading ? (
+                    <div className="flex items-center space-x-2">
+                      <div className="h-4 w-4 border-2 border-primary-foreground border-t-transparent rounded-full animate-spin" />
+                      <span>Creating account...</span>
+                    </div>
+                  ) : (
+                    'Create Account'
+                  )}
+                </Button>
+              </form>
+            </CardContent>
+          </Card>
+
+          {/* Sign In Link */}
+          <div className="text-center px-2">
+            <p className="text-sm text-muted-foreground">
+              Already have an account?{' '}
+              <Link
+                to="/login"
+                className="text-primary hover:text-primary/80 transition-colors font-medium"
               >
-                {loading ? (
-                  <div className="flex items-center space-x-2">
-                    <div className="h-4 w-4 border-2 border-primary-foreground border-t-transparent rounded-full animate-spin" />
-                    <span>Creating account...</span>
-                  </div>
-                ) : (
-                  'Create Account'
-                )}
-              </Button>
-            </form>
-          </CardContent>
-        </Card>
+                Sign in here
+              </Link>
+            </p>
+          </div>
 
-        {/* Sign In Link */}
-        <div className="text-center">
-          <p className="text-sm text-muted-foreground">
-            Already have an account?{' '}
-            <Link
-              to="/login"
-              className="text-primary hover:text-primary/80 transition-colors font-medium"
-            >
-              Sign in here
-            </Link>
-          </p>
+          {/* Benefits */}
+          <Card className="bg-card/30 backdrop-blur-sm border-border/50">
+            <CardContent className="p-4 sm:p-6">
+              <h3 className="text-base sm:text-lg font-semibold text-foreground mb-4">Why join Music Insights?</h3>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="space-y-3">
+                  <div className="flex items-start space-x-3">
+                    <div className="h-2 w-2 rounded-full bg-primary mt-2 flex-shrink-0" />
+                    <div>
+                      <h4 className="text-sm font-medium text-foreground">Real-time Analytics</h4>
+                      <p className="text-xs text-muted-foreground">
+                        Track live streaming data and music trends
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex items-start space-x-3">
+                    <div className="h-2 w-2 rounded-full bg-music-gold mt-2 flex-shrink-0" />
+                    <div>
+                      <h4 className="text-sm font-medium text-foreground">Market Insights</h4>
+                      <p className="text-xs text-muted-foreground">
+                        Compare trends across global markets
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div className="space-y-3">
+                  <div className="flex items-start space-x-3">
+                    <div className="h-2 w-2 rounded-full bg-music-purple mt-2 flex-shrink-0" />
+                    <div>
+                      <h4 className="text-sm font-medium text-foreground">Historical Data</h4>
+                      <p className="text-xs text-muted-foreground">
+                        Explore years of music performance data
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex items-start space-x-3">
+                    <div className="h-2 w-2 rounded-full bg-music-blue mt-2 flex-shrink-0" />
+                    <div>
+                      <h4 className="text-sm font-medium text-foreground">Advanced Search</h4>
+                      <p className="text-xs text-muted-foreground">
+                        Find any artist, track, or playlist instantly
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Creator Attribution */}
+          <div className="text-center px-2">
+            <p className="text-xs text-muted-foreground">
+              Created with ❤️ by{' '}
+              <a 
+                href="http://visheshsanghvi.me/" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-primary hover:text-primary/80 transition-colors font-medium"
+              >
+                Vishesh Sanghvi
+              </a>
+            </p>
+          </div>
         </div>
-
-        {/* Benefits */}
-        <Card className="bg-card/50 backdrop-blur-sm">
-          <CardContent className="p-6">
-            <h3 className="text-lg font-semibold text-foreground mb-4">Why join Music Insights?</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="space-y-3">
-                <div className="flex items-start space-x-3">
-                  <div className="h-2 w-2 rounded-full bg-primary mt-2 flex-shrink-0" />
-                  <div>
-                    <h4 className="text-sm font-medium text-foreground">Real-time Analytics</h4>
-                    <p className="text-xs text-muted-foreground">
-                      Track live streaming data and trends
-                    </p>
-                  </div>
-                </div>
-                <div className="flex items-start space-x-3">
-                  <div className="h-2 w-2 rounded-full bg-music-gold mt-2 flex-shrink-0" />
-                  <div>
-                    <h4 className="text-sm font-medium text-foreground">Market Insights</h4>
-                    <p className="text-xs text-muted-foreground">
-                      Compare trends across global markets
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <div className="space-y-3">
-                <div className="flex items-start space-x-3">
-                  <div className="h-2 w-2 rounded-full bg-music-purple mt-2 flex-shrink-0" />
-                  <div>
-                    <h4 className="text-sm font-medium text-foreground">Historical Data</h4>
-                    <p className="text-xs text-muted-foreground">
-                      Explore years of music performance data
-                    </p>
-                  </div>
-                </div>
-                <div className="flex items-start space-x-3">
-                  <div className="h-2 w-2 rounded-full bg-music-blue mt-2 flex-shrink-0" />
-                  <div>
-                    <h4 className="text-sm font-medium text-foreground">Advanced Search</h4>
-                    <p className="text-xs text-muted-foreground">
-                      Find any artist, track, or playlist instantly
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
+      </main>
     </div>
   );
 }
